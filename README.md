@@ -6,7 +6,7 @@ Faeria Patcher is util for debug Faeria network traffic
 * Disable traffic encryption
 
 ## Using
-`dotnet FaeriaPatcher.dll GameDirectory ServerIP`
+`FaeriaPatcher.exe GameDirectory ServerIP`
 * `GameDirectory` - Folder with `Faeria.exe`
 
 ## Thanks
