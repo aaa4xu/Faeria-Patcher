@@ -1,7 +1,9 @@
 # Faeria Patcher
+Faeria Patcher is util for debug Faeria network traffic
+
 ## Features
 * Change game server IP
-* Disable traffic encription
+* Disable traffic encryption
 
 ## Using
 `dotnet FaeriaPatcher.dll GameDirectory ServerIP`
