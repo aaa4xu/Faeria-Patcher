@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FaeriaPatcher": {
+      "commandName": "Project",
+      "commandLineArgs": "E:\\SteamLibrary\\steamapps\\common\\Faeria 127.0.0.1"
+    }
+  }
+}
