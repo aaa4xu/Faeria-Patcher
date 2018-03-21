@@ -7,10 +7,10 @@ namespace FaeriaPatcher
 {
     class Program
     {
-        private static readonly string ORIGINAL_LOGIN_API_ADDRESS = "https://api.abrakam.com/v20170728/api/faeria/token/";
-        private static readonly string GAME_SERVER_IP_FIELD = "DEFAULT_SERVER_IP";
-        private static readonly string SERVERS_IP_FIELD = "GAME_SERVERS_IPS_JSON_URL";
-        private static readonly string SERVERS_STATUS_FIELD = "SERVER_STATUS_JSON_URL";
+        private const string ORIGINAL_LOGIN_API_ADDRESS = "https://api.abrakam.com/v20170728/api/faeria/token/";
+        private const string GAME_SERVER_IP_FIELD = "DEFAULT_SERVER_IP";
+        private const string SERVERS_IP_FIELD = "GAME_SERVERS_IPS_JSON_URL";
+        private const string SERVERS_STATUS_FIELD = "SERVER_STATUS_JSON_URL";
 
         static void Main(string[] args)
         {
