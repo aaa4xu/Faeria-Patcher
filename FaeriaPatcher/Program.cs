@@ -2,6 +2,7 @@
 using Mono.Cecil.Cil;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace FaeriaPatcher
 {
@@ -18,7 +19,7 @@ namespace FaeriaPatcher
 
             if (args.Length != 2)
             {
-                Console.WriteLine("FaeriaPatcher.dll GameDirectory ServerIP");
+                Console.WriteLine("FaeriaPatcher.exe GameDirectory ServerIP");
                 return;
             }
 
@@ -109,11 +110,9 @@ namespace FaeriaPatcher
                 {
                     if (!method.HasBody) continue;
 
-                    for (int i = 0; i < method.Body.Instructions.Count - 1; i++)
+                    foreach (var instruction in method.Body.Instructions)
                     {
-                        var instruction = method.Body.Instructions[i];
-
-                        if (instruction.Operand != null && instruction.Operand.ToString().Equals(ORIGINAL_LOGIN_API_ADDRESS))
+                        if (IsLoadStringInstruction(instruction, ORIGINAL_LOGIN_API_ADDRESS))
                         {
                             instruction.Operand = FormatTokenEndpointAddress(serverIp);
                         }
@@ -126,20 +125,34 @@ namespace FaeriaPatcher
 
         private static void ReplaceStaticStringField(TypeDefinition type, string fieldName, string value)
         {
-            foreach (var method in type.Methods)
+            var method = GetMethod(type, ".cctor");
+            
+            foreach (var instruction in method.Body.Instructions)
             {
-                if (!method.Name.Equals(".cctor")) continue;
-
-                for (int i = 0; i < method.Body.Instructions.Count - 1; i++)
+                if (IsLoadStaticStringFieldInstruction(instruction, fieldName))
                 {
-                    var instruction = method.Body.Instructions[i];
-
-                    if (instruction.OpCode == OpCodes.Ldstr && instruction.Next.OpCode == OpCodes.Stsfld && ((FieldDefinition)instruction.Next.Operand).Name.Equals(fieldName))
-                    {
-                        instruction.Operand = value;
-                    }
+                    instruction.Operand = value;
                 }
             }
+        }
+
+        private static bool IsLoadStringInstruction(Instruction instruction)
+        {
+            return instruction.OpCode == OpCodes.Ldstr;
+        }
+        
+        private static bool IsLoadStringInstruction(Instruction instruction, string value)
+        {
+            return IsLoadStringInstruction(instruction)
+                   && instruction.Operand != null
+                   && instruction.Operand.ToString().Equals(value);
+        }
+        
+        private static bool IsLoadStaticStringFieldInstruction(Instruction instruction, string fieldName)
+        {
+            return IsLoadStringInstruction(instruction)
+                   && instruction.Next.OpCode == OpCodes.Stsfld
+                   && ((FieldDefinition) instruction.Next.Operand).Name.Equals(fieldName);
         }
 
         private static TypeDefinition GetType(AssemblyDefinition assembly, string typeNamespace, string typeName)
@@ -160,15 +173,7 @@ namespace FaeriaPatcher
 
         private static MethodDefinition GetMethod(TypeDefinition type, string methodName)
         {
-            foreach (var method in type.Methods)
-            {
-                if(method.Name.Equals(methodName))
-                {
-                    return method;
-                }
-            }
-
-            throw new Exception($"Method {methodName} not found in type!");
+            return type.Methods.First(method => method.Name.Equals(methodName));
         }
     }
 }
