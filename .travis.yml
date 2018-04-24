@@ -5,8 +5,7 @@ script:
   - dotnet restore
   - dotnet build -c Release -r win10-x64 FaeriaPatcher
 before_deploy:
-  - cd FaeriaPatcher/bin/Release/netcoreapp2.0/win10-x64/
-  - zip -r FaeriaPatcher.zip .
+  - cd FaeriaPatcher/bin/Release/netcoreapp2.0/win10-x64/ && zip -r FaeriaPatcher.zip .
 deploy:
   provider: releases
   api_key:
