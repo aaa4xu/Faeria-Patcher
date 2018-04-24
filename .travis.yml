@@ -3,7 +3,7 @@ mono: none
 dotnet: 2.0.0
 script:
   - dotnet restore
-  - dotnet build FaeriaPatcher
+  - dotnet build -c Release -r win10-x64 FaeriaPatcher
 before_deploy:
   - cd FaeriaPatcher/FaeriaPatcher/bin/Release/netcoreapp2.0/win10-x64/
   - zip -r FaeriaPatcher.zip .
