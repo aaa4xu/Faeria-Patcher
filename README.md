@@ -1,4 +1,4 @@
-# Faeria Patcher
+# Faeria Patcher [![Build Status](https://travis-ci.org/aaa4xu/Faeria-Patcher.svg?branch=master)](https://travis-ci.org/aaa4xu/Faeria-Patcher)
 Faeria Patcher is util for debug Faeria network traffic
 
 ## Features
