@@ -14,4 +14,4 @@ deploy:
   file: "./FaeriaPatcher/FaeriaPatcher/bin/Release/netcoreapp2.0/win10-x64/FaeriaPatcher-windows.zip"
   skip_cleanup: true
   on:
-    branch: release
+    branch: master
