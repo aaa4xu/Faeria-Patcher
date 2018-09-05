@@ -14,7 +14,8 @@ deploy:
   file: "./FaeriaPatcher/FaeriaPatcher/bin/Release/netcoreapp2.0/win10-x64/FaeriaPatcher-windows.zip"
   skip_cleanup: true
   on:
+    # What to repository to build
     repo: aaa4xu/Faeria-Patcher
-    branches:
-      only:
-        - master
+    # Only build binaries for tagged commits
+    tags: true
+    condition: $LATEST = true
